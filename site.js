@@ -27,16 +27,25 @@ if(loader) window.addEventListener('load', function(){
   }, 40);
 });
 
+/* ---------- landing: the gate locks scrolling before the browser can restore position, so we do it ---------- */
+addEventListener('pagehide', function(){ try{ sessionStorage.setItem('sq-y', scrollY); }catch(e){} });
+function landing(){
+  var el = location.hash.length > 1 && document.querySelector(location.hash);
+  var y = el ? el.offsetTop : (function(){ try{ return +sessionStorage.getItem('sq-y') || 0; }catch(e){ return 0; } })();
+  if(y) scrollTo({top:y, behavior:'instant'});
+}
+
 /* ---------- gate (index only; sub-pages have no gate yet) ---------- */
 var gate = $('#gate');
 if(gate){
 function openGate(){
-  if(RM){ gate.style.display='none'; document.body.style.overflow=''; $('.stick').classList.add('open'); return; }
+  if(RM){ gate.style.display='none'; document.body.style.overflow=''; $('.stick').classList.add('open'); landing(); return; }
   $('#stamp').classList.add('hit');
   setTimeout(function(){ gate.classList.add('open'); }, 650);
   setTimeout(function(){ $('.stick').classList.add('open'); }, 1000);
   setTimeout(function(){ gate.style.display='none'; }, 1700);
   document.body.style.overflow='';
+  landing();
 }
 document.body.style.overflow='hidden';
 if(new URLSearchParams(location.search).has('preview')){
@@ -44,7 +53,7 @@ if(new URLSearchParams(location.search).has('preview')){
   document.documentElement.style.scrollBehavior='auto';
   setTimeout(function(){ $('.stick').classList.add('open'); }, 250);
   var at = new URLSearchParams(location.search).get('at');
-  if(at){ setTimeout(function(){ var el = document.getElementById(at); if(el) scrollTo(0, el.offsetTop); }, 400); }
+  setTimeout(function(){ var el = at && document.getElementById(at); if(el){ scrollTo(0, el.offsetTop); } else { landing(); } }, 400);
 }
 $('#gateform').addEventListener('submit', function(e){
   e.preventDefault();

@@ -15,7 +15,7 @@
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 html,body{background:var(--black);color:var(--white);overflow-x:clip}
-body{font-family:var(--body);font-weight:300;overflow-x:hidden;cursor:none;font-synthesis-weight:none} /* SQ Display ships one weight; never fake-bold it */
+body{font-family:var(--body);font-weight:300;cursor:none;font-synthesis-weight:none} /* no overflow-x:hidden here: with html{overflow-x:clip} it would make body a scroll container and kill position:sticky */ /* SQ Display ships one weight; never fake-bold it */
 ::selection{background:var(--red);color:var(--white)}
 a{color:inherit;text-decoration:none}
 button,input,select,textarea{font-family:inherit;cursor:none}
