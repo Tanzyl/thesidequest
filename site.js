@@ -27,12 +27,11 @@ if(loader) window.addEventListener('load', function(){
   }, 40);
 });
 
-/* ---------- landing: the gate locks scrolling before the browser can restore position, so we do it ---------- */
-addEventListener('pagehide', function(){ try{ sessionStorage.setItem('sq-y', scrollY); }catch(e){} });
+/* ---------- landing: through the gate you start at the hero, unless a section link (#about etc.) brought you here ---------- */
+if('scrollRestoration' in history) history.scrollRestoration = 'manual';
 function landing(){
   var el = location.hash.length > 1 && document.querySelector(location.hash);
-  var y = el ? el.offsetTop : (function(){ try{ return +sessionStorage.getItem('sq-y') || 0; }catch(e){ return 0; } })();
-  if(y) scrollTo({top:y, behavior:'instant'});
+  scrollTo({top: el ? el.offsetTop : 0, behavior:'instant'});
 }
 
 /* ---------- gate (index only; sub-pages have no gate yet) ---------- */
