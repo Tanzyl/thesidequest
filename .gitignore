@@ -1,0 +1,19 @@
+# local tool state
+.vercel
+.gstack/
+.code-review-graph/
+.claude/
+
+# private client material — never in the repo (see CLAUDE.md)
+*.pdf
+*.docx
+*.jfif
+
+# media no page references any more
+hero-loop.mp4
+gallery-scrub.webm
+crowd.png
+
+# archive originals (the site uses the resized archive/a*.jpg)
+archive/*
+!archive/a*.jpg

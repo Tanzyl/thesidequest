@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>THE SIDEQUEST — members only</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><circle cx='32' cy='32' r='28' fill='%23CA0013'/><circle cx='32' cy='32' r='18' fill='none' stroke='%230D0D0D' stroke-width='3'/><ellipse cx='32' cy='32' rx='8' ry='18' fill='none' stroke='%230D0D0D' stroke-width='3'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Space+Mono:wght@400;700&family=Yellowtail&display=swap" rel="stylesheet">
+<link rel="preload" href="sq-display.woff" as="font" type="font/woff" crossorigin>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div id="grain"></div>
+<div id="cur"><span id="curlabel"></span></div><div id="curring"></div>
+
+<!-- LOADER -->
+<div id="loader" aria-hidden="true">
+  <div class="l1">SIDEQUEST TRANSIT AUTHORITY</div>
+  <div class="l2">VERIFYING&nbsp;VIBE</div>
+  <div class="bar"><i></i></div>
+  <div class="cnt" id="cnt">000</div>
+</div>
+
+<!-- FULL GATE — nothing visible without an account -->
+<div id="gate">
+  <div class="door l"></div>
+  <div class="door r"></div>
+  <div id="stamp"><span>ACCESS GRANTED</span></div>
+  <div class="inner">
+    <form class="pass" id="gateform" novalidate>
+      <div class="ph">
+        <div>
+          <div class="t1">CHECKPOINT / MEMBERS ONLY</div>
+          <div class="t2">THE SIDEQUEST</div>
+        </div>
+        <div class="t3">EST 2026<br>LHE → ???<br>GATE SQ-00</div>
+      </div>
+      <div class="grid">
+        <div class="full"><label for="g-name">Full name</label><input id="g-name" required autocomplete="name"></div>
+        <div><label for="g-phone">Phone</label><input id="g-phone" type="tel" required autocomplete="tel"></div>
+        <div><label for="g-email">Email</label><input id="g-email" type="email" required autocomplete="email"></div>
+        <div><label for="g-pass">Password</label><input id="g-pass" type="password" required autocomplete="new-password"></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+          <div><label for="g-age">Age</label><input id="g-age" type="number" min="1" max="99" required></div>
+          <div><label for="g-gender">Gender</label>
+            <select id="g-gender" required>
+              <option value="" selected disabled>—</option>
+              <option>female</option><option>male</option><option>other</option><option>skip</option>
+            </select>
+          </div>
+        </div>
+        <div class="err" id="gateerr" role="alert"></div>
+        <button class="go" type="submit">START</button>
+        <div class="alt">
+          <a href="#" id="loginlink">already in? log in</a>
+          <a href="#" id="skiplink">preview without account →</a>
+        </div>
+      </div>
+      <div class="barcode" aria-hidden="true"></div>
+    </form>
+  </div>
+</div>
+
+<!-- NAV -->
+<header id="nav">
+  <a class="logo" href="#hero" aria-label="The Sidequest — home">
+    <svg width="58" height="58" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+      <defs><path id="arc" d="M9,38 A23,23 0 0 1 55,38"/></defs>
+      <text font-family="Poppins,sans-serif" font-weight="700" font-size="7.4" letter-spacing="1.4" fill="#FFFFFF">
+        <textPath href="#arc" startOffset="50%" text-anchor="middle">THE SIDEQUEST</textPath>
+      </text>
+      <circle cx="32" cy="38" r="15" stroke="#CA0013" stroke-width="1.6"/>
+      <ellipse cx="32" cy="38" rx="7" ry="15" stroke="#CA0013" stroke-width="1.2"/>
+      <ellipse cx="32" cy="38" rx="15" ry="6.5" stroke="#CA0013" stroke-width="1.2"/>
+      <text x="32" y="62" text-anchor="middle" font-family="'Space Mono',monospace" font-size="5.6" letter-spacing="2" fill="#B5B5B5">EST 2026</text>
+    </svg>
+  </a>
+  <nav class="links" aria-label="primary">
+    <a href="#hero">Home</a>
+    <a href="#sidequests">New Sidequests</a>
+    <a href="#about">About Us</a>
+    <a href="crew.html">Crew</a>
+    <a href="faqs.html">FAQs</a>
+    <a href="#contact">Contact Us</a>
+  </nav>
+  <div class="icons">
+    <button id="profilebtn" aria-label="Profile">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>
+    </button>
+    <button id="menubtn" aria-label="Open menu" aria-expanded="false">
+      <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M3 7h18M3 12h18M3 17h10"/></svg>
+    </button>
+  </div>
+</header>
+
+<!-- DRAWER -->
+<div id="drawer" aria-hidden="true">
+  <div class="shade" id="drawershade"></div>
+  <div class="panel" role="dialog" aria-label="site map">
+    <button class="x" id="drawerx">CLOSE ✕</button>
+    <div class="tag">the whole map, no gatekeeping…</div>
+    <nav>
+      <a href="#hero"><i>01</i>Home</a>
+      <a href="#sidequests"><i>02</i>New Sidequests</a>
+      <a href="#about"><i>03</i>About Us</a>
+      <a href="crew.html"><i>04</i>Crew</a>
+      <a href="faqs.html"><i>05</i>FAQs</a>
+      <a href="join.html"><i>06</i>Join The Team</a>
+      <a href="#pitch"><i>07</i>Your Sidequest</a>
+      <a href="#contact"><i>08</i>Contact Us</a>
+      <a href="#" data-toast="profile page ships with the auth build."><i>09</i>Profile</a>
+    </nav>
+    <div class="socials">
+      <a href="https://discord.gg/yD5qRep89" target="_blank" rel="noopener" aria-label="Discord">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.6 5.3A16.9 16.9 0 0 0 15.4 4l-.5 1a15.6 15.6 0 0 0-5.8 0L8.6 4a16.9 16.9 0 0 0-4.2 1.3C1.7 9.3 1 13.2 1.4 17a17 17 0 0 0 5.2 2.6l1.1-1.8c-.6-.2-1.2-.5-1.7-.9l.4-.3a12.2 12.2 0 0 0 10.4 0l.4.3c-.5.4-1.1.7-1.7.9l1.1 1.8A17 17 0 0 0 21.8 17c.5-4.4-.7-8.3-2.2-11.7zM8.7 14.8c-1 0-1.8-.9-1.8-2s.8-2 1.8-2 1.8.9 1.8 2-.8 2-1.8 2zm6.6 0c-1 0-1.8-.9-1.8-2s.8-2 1.8-2 1.8.9 1.8 2-.8 2-1.8 2z"/></svg>
+      </a>
+      <a href="#" aria-label="YouTube" data-toast="youtube — where we'll document everything.">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 8s-.2-1.6-.9-2.3c-.9-.9-1.9-.9-2.3-1C16.6 4.5 12 4.5 12 4.5s-4.6 0-7.8.2c-.4.1-1.4.1-2.3 1C1.2 6.4 1 8 1 8S.8 9.9.8 11.8v1.7C.8 15.4 1 17.3 1 17.3s.2 1.6.9 2.3c.9.9 2 .9 2.5 1 1.8.2 7.6.2 7.6.2s4.6 0 7.8-.2c.4-.1 1.4-.1 2.3-1 .7-.7.9-2.3.9-2.3s.2-1.9.2-3.8v-1.7C23.2 9.9 23 8 23 8zM9.7 15.3V8.9l6.2 3.2-6.2 3.2z"/></svg>
+      </a>
+    </div>
+  </div>
+</div>
+
+<main>
+  <!-- HERO -->
+  <section id="hero">
+    <div class="stick">
+      <div class="vidwrap" aria-hidden="true">
+        <video id="herovid" src="hero-road.mp4" autoplay muted loop playsinline preload="auto"></video>
+      </div>
+      <div class="hero-title">
+        <h1><span class="lm"><span class="li">READY FOR A SIDEQUEST</span></span></h1>
+        <a class="hero-cta fa" style="--d:.3s" href="#sidequests">EXPLORE</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- TAPES -->
+  <div class="tapes" aria-hidden="true">
+    <div class="tape a"><div class="mq" style="--spd:22s">
+      <span>NO SPONSORS ✕ NO BRAND DECK ✕ BUILT BY US ✕ <i>est 2026</i> ✕ NO SPONSORS ✕ NO BRAND DECK ✕ BUILT BY US ✕ <i>est 2026</i> ✕&nbsp;</span>
+      <span>NO SPONSORS ✕ NO BRAND DECK ✕ BUILT BY US ✕ <i>est 2026</i> ✕ NO SPONSORS ✕ NO BRAND DECK ✕ BUILT BY US ✕ <i>est 2026</i> ✕&nbsp;</span>
+    </div></div>
+    <div class="tape b"><div class="mq" style="--spd:26s">
+      <span>TWO HOURS OFF THE GRID ✕ LAHORE ✕ 16+ ONLY ✕ <i>bring the chaos</i> ✕ TWO HOURS OFF THE GRID ✕ LAHORE ✕ 16+ ONLY ✕ <i>bring the chaos</i> ✕&nbsp;</span>
+      <span>TWO HOURS OFF THE GRID ✕ LAHORE ✕ 16+ ONLY ✕ <i>bring the chaos</i> ✕ TWO HOURS OFF THE GRID ✕ LAHORE ✕ 16+ ONLY ✕ <i>bring the chaos</i> ✕&nbsp;</span>
+    </div></div>
+  </div>
+
+  <!-- NEW SIDEQUESTS -->
+  <section id="sidequests">
+    <div class="eyebrow rv">SQ / BOARDING — DEPARTURES</div>
+    <h2 class="h-big rv">New Sidequests<span class="script">choose your chaos</span></h2>
+    <div class="tix">
+      <!-- past / sold out -->
+      <article class="ticket rv">
+        <div class="notch t"></div><div class="notch b"></div>
+        <div class="main">
+          <span class="badge sold">PAST — SOLD OUT</span>
+          <h3>Phase One</h3>
+          <div class="meta">
+            VENUE — <b>the warehouse, gulberg</b><br>
+            DATE — <b>30 MAY 2026</b> · DOORS 21:00<br>
+            SEAT — <b>WHEREVER YOU LANDED</b>
+          </div>
+          <p class="desc">the first one. if you were there, you know. if you weren't — that's what the next one's for.</p>
+        </div>
+        <div class="stub" data-cursor="GONE">
+          <span class="code">SQ-001 / LHE</span>
+          <div class="bc"></div>
+          <span class="price">GONE</span>
+        </div>
+      </article>
+      <!-- confirmed -->
+      <article class="ticket rv" id="liveticket">
+        <div class="notch t"></div><div class="notch b"></div>
+        <div class="main">
+          <span class="badge confirmed">CONFIRMED</span>
+          <h3>Aftershock</h3>
+          <div class="meta">
+            VENUE — <b>undisclosed rooftop, DHA</b><br>
+            DATE — <b>20 SEP 2026</b> · DOORS 20:30<br>
+            TIERS — <b>EARLY / STANDARD / LAST-MINUTE PANIC</b>
+          </div>
+          <p class="desc">the music is right, the people are right, and for a few hours none of it exists. rip the stub to claim yours.</p>
+        </div>
+        <div class="stub" data-cursor="RIP IT" role="button" tabindex="0" aria-label="Claim ticket (demo)">
+          <span class="code">SQ-002 / LHE</span>
+          <div class="bc"></div>
+          <span class="price">PKR 2,500</span>
+        </div>
+      </article>
+      <!-- coming soon / locked -->
+      <article class="ticket locked rv" aria-label="Unannounced sidequest — coming soon">
+        <div class="notch t"></div><div class="notch b"></div>
+        <div class="main">
+          <span class="badge soon">COMING SOON</span>
+          <h3>???</h3>
+          <div class="meta">
+            VENUE — <span class="redact">somewhere you don't expect</span><br>
+            DATE — <span class="redact">sooner than</span> <b>???</b><br>
+            SEAT — <span class="redact">redacted redac</span>
+          </div>
+          <p class="desc">we could tell you. we won't. stay in the loop.</p>
+        </div>
+        <div class="stub">
+          <span class="code">SQ-003 / ???</span>
+          <div class="bc"></div>
+          <span class="price">???</span>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- WHY US -->
+  <section id="whyus">
+    <video class="bgvid" src="whyus-scribble.mp4" muted loop playsinline preload="none" aria-hidden="true"></video>
+    <div class="sec-in">
+      <div class="eyebrow rv">SQ / MANIFESTO — READ BEFORE BOARDING</div>
+      <h2 class="h-big rv">Why Us</h2>
+      <div class="manifesto rv">
+        <p>life at 21 is already a full-time job you didn't apply for. classes, work, family, the algorithm telling you you're behind.</p>
+        <p>so we didn't hire a company to fix that for us, <em>we built our own two hours off the grid.</em></p>
+        <p>no event planners, no brand deck, no sponsors calling the shots. just us setting up the speakers because nothing like this existed yet.</p>
+        <p>we're not another thing on your to-do list. <em>we're the thing you actually look forward to</em> — built by the same people who needed it.</p>
+      </div>
+      <p class="sec-sig rv">It’s all about not being ordinary!</p>
+    </div>
+  </section>
+
+  <!-- ABOUT US -->
+  <section id="about">
+    <video class="bgvid" src="about-couch.mp4" muted loop playsinline preload="none" aria-hidden="true"></video>
+    <div class="eyebrow rv">SQ / ORIGIN STORY</div>
+    <div class="sec-in">
+      <h2 class="h-big rv">About Us</h2>
+      <div class="about-copy rv">
+        <p>honestly? we're just a bunch of people in our early 20s who realised that adulting hit different and nobody warned us.</p>
+        <p>the stress, the routines, the pressure of figuring everything out — it gets heavy. and somewhere in between all of that, the fun stopped being a priority.</p>
+        <p>we started The Sidequest because we needed it ourselves. a night where none of that exists. where you walk in, the music is right, the people are right, and for a few hours you're not a student or an employee or someone's responsibility — you're just there.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY: scroll scrubs the film -->
+  <section id="gallery">
+    <div class="gal-stick">
+      <div class="wall" aria-hidden="true">
+        <div class="wall-scene">
+          <div class="wall-set">
+          <img class="card" decoding="async" src="archive/a2.jpg" alt="" loading="lazy" style="--x:-4vw;--y:2vh;--w:40vw;--z:-120px;--rx:3deg;--ry:-6deg">
+          <img class="card" decoding="async" src="archive/a1.jpg" alt="" loading="lazy" style="--x:46vw;--y:0vh;--w:26vw;--z:60px;--rx:0deg;--ry:5deg">
+          <img class="card" decoding="async" src="archive/a3.jpg" alt="" loading="lazy" style="--x:70vw;--y:14vh;--w:38vw;--z:-260px;--rx:-3deg;--ry:-9deg">
+          <img class="card" decoding="async" src="archive/a6.jpg" alt="" loading="lazy" style="--x:0vw;--y:52vh;--w:42vw;--z:-40px;--rx:0deg;--ry:6deg">
+          <img class="card" decoding="async" src="archive/a3.jpg" alt="" loading="lazy" style="--x:22vw;--y:62vh;--w:36vw;--z:120px;--rx:2deg;--ry:-4deg">
+          <img class="card" decoding="async" src="archive/a5.jpg" alt="" loading="lazy" style="--x:62vw;--y:48vh;--w:38vw;--z:-160px;--rx:0deg;--ry:7deg">
+          <img class="card" decoding="async" src="archive/a4.jpg" alt="" loading="lazy" style="--x:40vw;--y:100vh;--w:34vw;--z:0px;--rx:-2deg;--ry:-6deg">
+          <img class="card" decoding="async" src="archive/a1.jpg" alt="" loading="lazy" style="--x:2vw;--y:118vh;--w:28vw;--z:200px;--rx:0deg;--ry:8deg">
+          <img class="card" decoding="async" src="archive/a2.jpg" alt="" loading="lazy" style="--x:70vw;--y:112vh;--w:36vw;--z:-300px;--rx:4deg;--ry:0deg">
+          <img class="card" decoding="async" src="archive/a6.jpg" alt="" loading="lazy" style="--x:58vw;--y:150vh;--w:40vw;--z:-80px;--rx:0deg;--ry:-8deg">
+          <img class="card" decoding="async" src="archive/a5.jpg" alt="" loading="lazy" style="--x:-2vw;--y:160vh;--w:30vw;--z:80px;--rx:0deg;--ry:4deg">
+          <img class="card" decoding="async" src="archive/a4.jpg" alt="" loading="lazy" style="--x:26vw;--y:176vh;--w:34vw;--z:-200px;--rx:-3deg;--ry:5deg">
+          <img class="card" decoding="async" src="archive/a2.jpg" alt="" loading="lazy" style="--x:66vw;--y:196vh;--w:30vw;--z:40px;--rx:0deg;--ry:-5deg">
+          </div>
+          <div class="wall-set">
+          <img class="card" decoding="async" src="archive/a2.jpg" alt="" loading="lazy" style="--x:-4vw;--y:2vh;--w:40vw;--z:-120px;--rx:3deg;--ry:-6deg">
+          <img class="card" decoding="async" src="archive/a1.jpg" alt="" loading="lazy" style="--x:46vw;--y:0vh;--w:26vw;--z:60px;--rx:0deg;--ry:5deg">
+          <img class="card" decoding="async" src="archive/a3.jpg" alt="" loading="lazy" style="--x:70vw;--y:14vh;--w:38vw;--z:-260px;--rx:-3deg;--ry:-9deg">
+          <img class="card" decoding="async" src="archive/a6.jpg" alt="" loading="lazy" style="--x:0vw;--y:52vh;--w:42vw;--z:-40px;--rx:0deg;--ry:6deg">
+          <img class="card" decoding="async" src="archive/a3.jpg" alt="" loading="lazy" style="--x:22vw;--y:62vh;--w:36vw;--z:120px;--rx:2deg;--ry:-4deg">
+          <img class="card" decoding="async" src="archive/a5.jpg" alt="" loading="lazy" style="--x:62vw;--y:48vh;--w:38vw;--z:-160px;--rx:0deg;--ry:7deg">
+          <img class="card" decoding="async" src="archive/a4.jpg" alt="" loading="lazy" style="--x:40vw;--y:100vh;--w:34vw;--z:0px;--rx:-2deg;--ry:-6deg">
+          <img class="card" decoding="async" src="archive/a1.jpg" alt="" loading="lazy" style="--x:2vw;--y:118vh;--w:28vw;--z:200px;--rx:0deg;--ry:8deg">
+          <img class="card" decoding="async" src="archive/a2.jpg" alt="" loading="lazy" style="--x:70vw;--y:112vh;--w:36vw;--z:-300px;--rx:4deg;--ry:0deg">
+          <img class="card" decoding="async" src="archive/a6.jpg" alt="" loading="lazy" style="--x:58vw;--y:150vh;--w:40vw;--z:-80px;--rx:0deg;--ry:-8deg">
+          <img class="card" decoding="async" src="archive/a5.jpg" alt="" loading="lazy" style="--x:-2vw;--y:160vh;--w:30vw;--z:80px;--rx:0deg;--ry:4deg">
+          <img class="card" decoding="async" src="archive/a4.jpg" alt="" loading="lazy" style="--x:26vw;--y:176vh;--w:34vw;--z:-200px;--rx:-3deg;--ry:5deg">
+          <img class="card" decoding="async" src="archive/a2.jpg" alt="" loading="lazy" style="--x:66vw;--y:196vh;--w:30vw;--z:40px;--rx:0deg;--ry:-5deg">
+          </div>
+        </div>
+      </div>
+      <div class="gal-shade" aria-hidden="true"></div>
+      <div class="gal-head">
+        <div class="eyebrow">SQ / ARCHIVE — YOUR SCROLL IS THE PLAYHEAD</div>
+        <h2 class="h-big">The Archive<span class="script">how it felt</span></h2>
+      </div>
+      <div class="gal-cap" data-i="0"><i>00:00</i> the setup — speakers we carried ourselves.</div>
+      <div class="gal-cap" data-i="1"><i>01:00</i> the drop — nobody checked their phone.</div>
+      <div class="gal-cap" data-i="2"><i>03:00</i> the walk out — ears ringing, worth it.</div>
+      <div class="gal-bar" aria-hidden="true"><i></i></div>
+    </div>
+  </section>
+
+
+
+
+  <!-- YOUR SIDEQUEST -->
+  <section id="pitch">
+    <video class="bgvid" src="pitch-topo.mp4" muted loop playsinline preload="none" aria-hidden="true"></video>
+    <div class="sec-in">
+    <div class="eyebrow rv">SQ / USER-GENERATED CHAOS</div>
+    <h2 class="h-big rv">Your Sidequest<span class="script">pitch us</span></h2>
+    <p class="lead rv">something you want to do with your friends — or a group of randoms — that we could help make happen. pitch it.</p>
+    <form class="formwrap rv" data-toast="idea logged (demo). the team reads these once the backend exists.">
+      <div><label for="p-name">Name</label><input id="p-name" required></div>
+      <div><label for="p-contact">Email or number</label><input id="p-contact" required></div>
+      <div class="full"><label for="p-idea">Your idea — what's the sidequest?</label><textarea id="p-idea" required></textarea></div>
+      <button class="sendbtn" type="submit">PITCH IT</button>
+    </form>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="eyebrow rv">SQ / SIGNALS</div>
+    <h2 class="h-big rv">Contact Us<span class="script">say hi</span></h2>
+    <div class="iconrow rv">
+      <a href="mailto:thesidequestt@gmail.com" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="1"/><path d="M3 7l9 6 9-6"/></svg><i>EMAIL</i></a>
+      <a href="#" aria-label="WhatsApp" data-toast="whatsapp — no 'is this still available' please."><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-3-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.6-6.1c-.3-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.3-.7.8-.8 1-.1.2-.3.2-.6.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4 0-.5.1-.7l.4-.5c.1-.2.1-.3.2-.5s0-.4 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7c.1.2 1.9 2.9 4.6 4.1.6.3 1.1.4 1.5.6.6.2 1.2.2 1.6.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.2-.3-.2-.5-.3z"/></svg><i>WHATSAPP</i></a>
+      <a href="https://instagram.com/thesidequestof" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg><i>INSTAGRAM</i></a>
+      <a href="https://discord.gg/yD5qRep89" target="_blank" rel="noopener" aria-label="Discord"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.6 5.3A16.9 16.9 0 0 0 15.4 4l-.5 1a15.6 15.6 0 0 0-5.8 0L8.6 4a16.9 16.9 0 0 0-4.2 1.3C1.7 9.3 1 13.2 1.4 17a17 17 0 0 0 5.2 2.6l1.1-1.8c-.6-.2-1.2-.5-1.7-.9l.4-.3a12.2 12.2 0 0 0 10.4 0l.4.3c-.5.4-1.1.7-1.7.9l1.1 1.8A17 17 0 0 0 21.8 17c.5-4.4-.7-8.3-2.2-11.7zM8.7 14.8c-1 0-1.8-.9-1.8-2s.8-2 1.8-2 1.8.9 1.8 2-.8 2-1.8 2zm6.6 0c-1 0-1.8-.9-1.8-2s.8-2 1.8-2 1.8.9 1.8 2-.8 2-1.8 2z"/></svg><i>DISCORD</i></a>
+      <a href="#" aria-label="YouTube" data-toast="youtube — where we'll document everything."><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 8s-.2-1.6-.9-2.3c-.9-.9-1.9-.9-2.3-1C16.6 4.5 12 4.5 12 4.5s-4.6 0-7.8.2c-.4.1-1.4.1-2.3 1C1.2 6.4 1 8 1 8S.8 9.9.8 11.8v1.7C.8 15.4 1 17.3 1 17.3s.2 1.6.9 2.3c.9.9 2 .9 2.5 1 1.8.2 7.6.2 7.6.2s4.6 0 7.8-.2c.4-.1 1.4-.1 2.3-1 .7-.7.9-2.3.9-2.3s.2-1.9.2-3.8v-1.7C23.2 9.9 23 8 23 8zM9.7 15.3V8.9l6.2 3.2-6.2 3.2z"/></svg><i>YOUTUBE</i></a>
+    </div>
+    <p class="noaddr">NO PHYSICAL ADDRESS. THAT'S THE POINT.</p>
+  </section>
+</main>
+
+<footer>
+  <div class="foot-mq" aria-hidden="true">
+    <div class="mq" style="--spd:30s">
+      <span>THE SIDEQUEST</span><span class="solid">EST 2026</span><span>MINDSET NOT A PARTY</span><span class="solid">LAHORE</span>
+      <span>THE SIDEQUEST</span><span class="solid">EST 2026</span><span>MINDSET NOT A PARTY</span><span class="solid">LAHORE</span>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <span>© 2026 THE SIDEQUEST — thesidequest.fun</span>
+    <a href="join.html">JOIN THE TEAM</a>
+    <a href="#pitch">YOUR SIDEQUEST</a>
+    <span>16+ ONLY · LAHORE, PK</span>
+  </div>
+</footer>
+
+<div id="toast" role="status"></div>
+
+<script src="site.js"></script>
+</body>
+</html>
