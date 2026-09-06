@@ -18,7 +18,7 @@ Source documents (read these before touching copy or rules):
 - **Run locally**: open `index.html` in a browser. No server needed.
 - **Skip the signup gate**: append `?preview` to the URL. Add `&at=<section-id>` to auto-scroll to a section (e.g. `?preview&at=team`) — used for headless screenshots. The gate also has a visible "preview without account" link (`#skiplink`) that plays the full ACCESS GRANTED animation — remove before the real auth build.
 - **Deploy**: the folder is linked to Vercel project `thesidequest` (`.vercel/project.json`, gitignored). Live at `https://thesidequest.vercel.app`. `vercel deploy` for preview, `vercel deploy --prod` for production. Install the CLI with `npm i -g vercel` if missing.
-- **`.vercelignore` is an allowlist**: it ignores `*` and whitelists only the four `.html` files, `styles.css`, `site.js`, `sq-display.woff`, `hero-road.mp4`, `whyus-scribble.mp4`, `about-couch.mp4`, `pitch-topo.mp4`, and `archive/a1.jpg`..`a6.jpg` (re-included after `archive/*`, because a `*`-excluded directory can't have children re-included). Any new asset the page references must be added there or it 404s in production. Never loosen it — the spec, PDF, and mood images must not ship.
+- **`.vercelignore` is a denylist mirroring `.gitignore`** (Vercel does not honor re-including files inside a `*`-excluded directory, so the old allowlist 404'd `archive/`). It blocks the spec, PDF, mood images, dead media, archive originals, CLAUDE.md and tool state. Anything else in the folder ships, so keep private files matching those patterns.
 
 ## Site Architecture
 
