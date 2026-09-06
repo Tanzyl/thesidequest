@@ -27,11 +27,11 @@ if(loader) window.addEventListener('load', function(){
   }, 40);
 });
 
-/* ---------- landing: through the gate you start at the hero, unless a section link (#about etc.) brought you here ---------- */
+/* ---------- landing: through the gate you always start at the hero. A leftover #hash (EXPLORE, nav links) is dropped so it can't pull the page down ---------- */
 if('scrollRestoration' in history) history.scrollRestoration = 'manual';
 function landing(){
-  var el = location.hash.length > 1 && document.querySelector(location.hash);
-  scrollTo({top: el ? el.offsetTop : 0, behavior:'instant'});
+  if(location.hash) history.replaceState(null, '', location.pathname + location.search);
+  scrollTo({top:0, behavior:'instant'});
 }
 
 /* ---------- gate (index only; sub-pages have no gate yet) ---------- */
