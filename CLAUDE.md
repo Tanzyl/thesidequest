@@ -17,7 +17,7 @@ Source documents (read these before touching copy or rules):
 
 - **Run locally**: open `index.html` in a browser. No server needed.
 - **Skip the signup gate**: append `?preview` to the URL. Add `&at=<section-id>` to auto-scroll to a section (e.g. `?preview&at=team`) — used for headless screenshots. The gate also has a visible "preview without account" link (`#skiplink`) that plays the full ACCESS GRANTED animation — remove before the real auth build.
-- **Deploy**: the folder is linked to Vercel project `thesidequest` (`.vercel/project.json`, gitignored). Live at `https://thesidequest.vercel.app`. `vercel deploy` for preview, `vercel deploy --prod` for production. Install the CLI with `npm i -g vercel` if missing.
+- **Deploy**: the GitHub repo is connected to Vercel project `thesidequest` (team tanzyls-projects, framework preset Other, no build step). Every push to `main` deploys to production at `https://thesidequest.vercel.app`; other branches get preview URLs. `vercel deploy --prod` from this folder still works as a manual fallback (run it from PowerShell, the Git Bash shim hides the CLI output). Vercel builds from the repo, so anything `.gitignore` excludes never ships either.
 - **`.vercelignore` is a denylist mirroring `.gitignore`** (Vercel does not honor re-including files inside a `*`-excluded directory, so the old allowlist 404'd `archive/`). It blocks the spec, PDF, mood images, dead media, archive originals, CLAUDE.md and tool state. Anything else in the folder ships, so keep private files matching those patterns.
 
 ## Site Architecture
